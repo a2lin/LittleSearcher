@@ -15,7 +15,7 @@ class Tokenizer:
 	def tokenize_index(self):
 		"""tokenizes the file generically. Returns the inverted index."""
 		inFile = open(self.fileDir, 'r')
-		i = 0
+		i = 1
 		for line in inFile:
 			arr = re.split("[^A-Za-z']+", line)
 			for x in arr:

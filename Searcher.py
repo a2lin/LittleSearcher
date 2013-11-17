@@ -1,6 +1,6 @@
 
 class Searcher:
-	""" The searcher for a Little Search Engine """
+	""" The Searcher for a Little Search Engine """
 
 	def __init__(self, index):
 		""" Initialize the searching index to be the passed-in index """
@@ -14,6 +14,7 @@ class Searcher:
 		"""
 
 		tokenArrays = self.tokenize_query(query)
+
 		return self.intersect(tokenArrays)
 
 	def tokenize_query(self, toTok):
@@ -21,8 +22,10 @@ class Searcher:
 
 		tokens = toTok.split(" ")
 		queriedArray = []
+
 		for x in tokens:
-			queriedArray += self.index[x]
+			if x in self.index:
+				queriedArray += [self.index[x]]
 
 		return queriedArray
 
@@ -33,13 +36,24 @@ class Searcher:
 		to support multi-term queries.
 		"""
 
-		intersection = {}
+		if(len(tokenArrays) == 0):
+			return None
 
-		for singleTokenResult in tokenArrays:
-			for singleTokenElement in singleTokenResult:
-				intersection[singleTokenElement] = 1
+		elif(len(tokenArrays) == 1):
+			return tokenArrays[0]
 
-		return intersection.keys
+		else:
+			initial = set(tokenArrays[0])
+			for tokenQueryResults in tokenArrays[1:]:
+				initial = initial & set(tokenQueryResults)
+
+			toReturn = list(initial)
+			toReturn.sort()
+
+			if(len(toReturn) == 0):
+				return None
+				
+			return toReturn
 
 
 
