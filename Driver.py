@@ -8,7 +8,7 @@ se.createIndex("twogentverona.txt")
 while True:
 	print "Please Enter a Query:"
 	q = sys.stdin.readline()
-	print se.query(q)
+	print se.query(q.strip())
 
 # tok = Tokenizer.Tokenizer()
 # tok.load('twogentverona.txt')
