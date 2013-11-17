@@ -8,10 +8,44 @@ class Searcher:
 		self.index = index
 
 	def search(self, query):
-		""" method that returns all elements of a single-element query """
+		""" 
+		Method that returns all elements of a query. 
+		Supports multi-element queries
+		"""
 
-		if (query in self.index):
-			return self.index[query]
+		tokenArrays = self.tokenize_query(query)
+		return self.intersect(tokenArrays)
+
+	def tokenize_query(self, toTok):
+		""" simple tokenizer for queries. Queries and returns. """
+
+		tokens = toTok.split(" ")
+		queriedArray = []
+		for x in tokens:
+			queriedArray += self.index[x]
+
+		return queriedArray
+
+	def intersect(self, tokenArrays):
+		""" 
+		Takes the intersection of the document arrays 
+		to generate final result. This functionality is
+		to support multi-term queries.
+		"""
+
+		intersection = {}
+
+		for singleTokenResult in tokenArrays:
+			for singleTokenElement in singleTokenResult:
+				intersection[singleTokenElement] = 1
+
+		return intersection.keys
+
+
+
+
+
+
 
 
 
